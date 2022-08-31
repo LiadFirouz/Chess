@@ -12,3 +12,6 @@ class Pawn(Piece):
 
     def img(self):
         return self.image
+
+    def move(self):
+        pass

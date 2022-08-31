@@ -31,8 +31,8 @@ class InitGame:
     # self.draw_pieces(board=self.board)
 
     def init_board(self):
+        "initialize the game board in the matrix"
 
-        piece = None
         board = [[Spot.Spot(Piece.Piece, row, col) for col in range(8)] for row in range(8)]
 
         for row in range(8):
@@ -71,6 +71,7 @@ class InitGame:
         return board
 
     def draw(self, board):
+        "draw the pieces on the game board"
         for row in range(board.__len__()):
             for col in range(board.__len__()):
                 if board[row][col].piece is not None:
@@ -78,32 +79,39 @@ class InitGame:
                     self.display_surface.blit(pygame.transform.scale(image, (55, 55)),
                                               (board[row][col].piece.y, board[row][col].piece.x))
 
-
     def print_board(self, board):
-        print("------------------------------------")
+        "print the matrix in the CLI"
         print("new BOARD:")
+        print("------------------------------------")
         for row in board:
             for obj in row:
                 print(obj.__str__())
 
-    def find_Cell(self, dot):
+    def find_Cell_by_dot(self, dot):
+        "find the position click of the mouse on the board"
         for i in range(0, 640, CELL_SIZE):
             if i < dot <= i + CELL_SIZE:
                 return i // CELL_SIZE
 
+    def get_cell_center_pos(self, row, col):
+        x = row * CELL_SIZE
+        y = col * CELL_SIZE
+        return x, y
+
     def choose_cell(self, board, row, col):
+        "color the selected cell by click"
+        print("{},{}".format(row, col))
+        x, y = (self.get_cell_center_pos(row, col))
+        print("{},{}".format(x, y))
         green_frame = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\green_fram.png')
-        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)),
-                                  (
-                                      board[row][col].piece.y - SHIFT_FOR_PHOTO,
-                                      board[row][col].piece.x - SHIFT_FOR_PHOTO))
+        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)),(y,x))
 
 
 def main():
     WIDTH, HEIGHT = 640, 640
     init_game_obj = InitGame(WIDTH, HEIGHT)
     run = True
-    #init_game_obj.print_board(init_game_obj.board)
+    # init_game_obj.print_board(init_game_obj.board)
     while run:
 
         # iterate over the list of Event objects
@@ -117,8 +125,8 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                col = init_game_obj.find_Cell(pos[0])
-                row = init_game_obj.find_Cell(pos[1])
+                col = init_game_obj.find_Cell_by_dot(pos[0])
+                row = init_game_obj.find_Cell_by_dot(pos[1])
 
                 if init_game_obj.board[row][col].piece is not None:
                     init_game_obj.choose_cell(board=init_game_obj.board, row=row, col=col)
