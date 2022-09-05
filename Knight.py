@@ -1,5 +1,5 @@
 from Piece import Piece
-
+import main
 
 class Knight(Piece):
 
@@ -12,3 +12,38 @@ class Knight(Piece):
 
     def img(self):
         return self.image
+
+    def move(self):
+        y = self.y
+        x = self.x
+        stack = []
+
+        for f_x in range(0, 640, 80):
+            for f_y in range(0, 640, 80):
+
+                if f_x == (y - main.SHIFT_FOR_PHOTO) and f_y == (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+                if f_y == (x - main.SHIFT_FOR_PHOTO) and f_x == (y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+
+                if f_x == (y - main.SHIFT_FOR_PHOTO ) and f_y == (x - main.SHIFT_FOR_PHOTO- (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+                if f_y == (x - main.SHIFT_FOR_PHOTO ) and f_x == (y - main.SHIFT_FOR_PHOTO- (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+
+                if f_y == (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+                if f_y == (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+
+                if f_y == (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+                if f_y == (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)):
+                    stack.append((f_x, f_y))
+
+        print(stack)
+        return stack

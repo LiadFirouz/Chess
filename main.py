@@ -21,14 +21,13 @@ class InitGame:
         self.surface_width = width
         self.surface_height = height
 
-        self.display_surface = pygame.display.set_mode((self.surface_width, self.surface_height))
-        pygame.display.set_caption('Chess Game')
-        image = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\img\chess_board.png')
-        self.display_surface.blit(pygame.transform.scale(image, (self.surface_width, self.surface_height)), (0, 0))
+        #self.display_surface = pygame.display.set_mode((self.surface_width, self.surface_height))
+        #pygame.display.set_caption('Chess Game')
+        #image = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\img\chess_board.png')
+        #self.display_surface.blit(pygame.transform.scale(image, (self.surface_width, self.surface_height)), (0, 0))
 
         self.board = self.init_board()
-
-    # self.draw_pieces(board=self.board)
+        # self.print_board(board=self.board)
 
     def init_board(self):
         "initialize the game board in the matrix"
@@ -58,9 +57,9 @@ class InitGame:
                         board[row][col].piece = Bishop.Bishop(x, y, isWhite, False)
 
                 if row == 0 and col == 3:
-                    board[row][col].piece = Queen.Queen(x, y, True, False)
-                if row == 0 and col == 4:
                     board[row][col].piece = King.King(x, y, True, False)
+                if row == 0 and col == 4:
+                    board[row][col].piece = Queen.Queen(x, y, True, False)
 
                 if row == 7 and col == 3:
                     board[row][col].piece = King.King(x, y, False, False)
@@ -72,6 +71,11 @@ class InitGame:
 
     def draw(self, board):
         "draw the pieces on the game board"
+        self.display_surface = pygame.display.set_mode((self.surface_width, self.surface_height))
+        pygame.display.set_caption('Chess Game')
+        image = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\img\chess_board.png')
+        self.display_surface.blit(pygame.transform.scale(image, (self.surface_width, self.surface_height)), (0, 0))
+
         for row in range(board.__len__()):
             for col in range(board.__len__()):
                 if board[row][col].piece is not None:
@@ -85,7 +89,8 @@ class InitGame:
         print("------------------------------------")
         for row in board:
             for obj in row:
-                print(obj.__str__())
+                if obj is not None:
+                    print(obj.piece.x, obj.piece.y)
 
     def find_Cell_by_dot(self, dot):
         "find the position click of the mouse on the board"
@@ -98,25 +103,27 @@ class InitGame:
         y = col * CELL_SIZE
         return x, y
 
-    def choose_cell(self, board, row, col):
+    def possible_move_colored_cell(self, board, row, col):
         "color the selected cell by click"
-        print("{},{}".format(row, col))
-        x, y = (self.get_cell_center_pos(row, col))
-        print("{},{}".format(x, y))
+        #x, y = (self.get_cell_center_pos(row, col))
+        #print("{},{}".format(x, y))
         green_frame = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\green_fram.png')
-        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)),(y,x))
+        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (col, row))
 
 
 def main():
     WIDTH, HEIGHT = 640, 640
     init_game_obj = InitGame(WIDTH, HEIGHT)
     run = True
+    hasClicked = False
     # init_game_obj.print_board(init_game_obj.board)
     while run:
 
         # iterate over the list of Event objects
         # that was returned by pygame.event.get() method.
+
         for event in pygame.event.get():
+
             # if event object type is QUIT
             # then quitting the pygame
             # and program both.
@@ -127,11 +134,32 @@ def main():
                 pos = pygame.mouse.get_pos()
                 col = init_game_obj.find_Cell_by_dot(pos[0])
                 row = init_game_obj.find_Cell_by_dot(pos[1])
-
                 if init_game_obj.board[row][col].piece is not None:
-                    init_game_obj.choose_cell(board=init_game_obj.board, row=row, col=col)
 
-                    # Draws the surface object to the screen.
+                    if hasClicked:
+                        init_game_obj.draw(init_game_obj.board)
+                        pygame.display.update()
+                        hasClicked = False
+
+                    stack = init_game_obj.board[row][col].piece.move()
+
+                    while stack:
+                        (x, y) = stack.pop()
+                        #print('----------------------')
+                        #print(stack)
+                        #x = init_game_obj.find_Cell_by_dot(x)
+                        #y = init_game_obj.find_Cell_by_dot(y)
+                        init_game_obj.possible_move_colored_cell(board=init_game_obj.board, row=y, col=x)
+
+                    #x, y = init_game_obj.board[row][col].piece.move()
+                    #x = init_game_obj.find_Cell_by_dot(x)
+                    #y = init_game_obj.find_Cell_by_dot(y)
+                    # print("{},{}".format(x, y))
+                    #init_game_obj.possibole_move_colored_cell(board=init_game_obj.board, row=x, col=y)
+
+                    hasClicked = True
+
+        # Draws the surface object to the screen.
         pygame.display.update()
 
 

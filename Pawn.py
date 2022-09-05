@@ -1,5 +1,5 @@
 from Piece import Piece
-
+import main
 
 class Pawn(Piece):
 
@@ -14,4 +14,12 @@ class Pawn(Piece):
         return self.image
 
     def move(self):
-        pass
+        stack = []
+        if not self.white:
+            pos = (self.y - main.SHIFT_FOR_PHOTO, (self.x - main.CELL_SIZE) - main.SHIFT_FOR_PHOTO)
+
+        else:
+            pos = (self.y - main.SHIFT_FOR_PHOTO, (self.x + main.CELL_SIZE) - main.SHIFT_FOR_PHOTO)
+
+        stack.append(pos)
+        return stack
