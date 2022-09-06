@@ -21,29 +21,15 @@ class Knight(Piece):
         for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
 
-                if f_x == (y - main.SHIFT_FOR_PHOTO) and f_y == (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
+                if f_x == ((y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) or (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE)) and f_y == ((x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) or (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE))):
                     stack.append((f_x, f_y))
-                if f_y == (x - main.SHIFT_FOR_PHOTO) and f_x == (y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
-                    stack.append((f_x, f_y))
-
-                if f_x == (y - main.SHIFT_FOR_PHOTO ) and f_y == (x - main.SHIFT_FOR_PHOTO- (2 * main.CELL_SIZE)):
-                    stack.append((f_x, f_y))
-                if f_y == (x - main.SHIFT_FOR_PHOTO ) and f_x == (y - main.SHIFT_FOR_PHOTO- (2 * main.CELL_SIZE)):
+                if f_x == ((y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) or (y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE))) and f_y == ((x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) or (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE)):
                     stack.append((f_x, f_y))
 
-                if f_y == (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) and f_x == (
-                        y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
-                    stack.append((f_x, f_y))
-                if f_y == (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) and f_x == (
-                        y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)):
-                    stack.append((f_x, f_y))
-
-                if f_y == (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) and f_x == (
-                        y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)):
-                    stack.append((f_x, f_y))
-                if f_y == (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) and f_x == (
-                        y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)):
-                    stack.append((f_x, f_y))
+                if f_x == ((x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) or (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE)) and f_y == ((y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) or (y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE))):
+                    stack.append((f_y, f_x))
+                if f_x == ((x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) or (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE))) and f_y == ((y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) or (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE)):
+                    stack.append((f_y, f_x))
 
         print(stack)
         return stack
