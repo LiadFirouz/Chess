@@ -1,6 +1,7 @@
 from Piece import Piece
 import main
 
+
 class King(Piece):
 
     def __init__(self, x, y, isWhite, isKilled):
@@ -27,22 +28,24 @@ class King(Piece):
                 if f_y == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (y - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
 
-
                 if f_x == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_y == (x - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
                 if f_y == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (y - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
 
-                if f_y == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
+                if f_y == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
                     stack.append((f_x, f_y))
-                if f_y == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
-                    stack.append((f_x, f_y))
-
-                if f_y == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
-                    stack.append((f_x, f_y))
-                if f_y == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
+                if f_y == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
                     stack.append((f_x, f_y))
 
+                if f_y == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
+                    stack.append((f_x, f_y))
+                if f_y == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (
+                        y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
+                    stack.append((f_x, f_y))
 
-        #print(stack)
+        # print(stack)
         return stack

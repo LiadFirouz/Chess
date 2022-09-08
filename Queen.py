@@ -31,5 +31,4 @@ class Queen(Piece):
                 if f_x == (y - main.SHIFT_FOR_PHOTO) or f_y == (x - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
 
-
         return stack
