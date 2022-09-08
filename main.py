@@ -27,9 +27,9 @@ class InitGame:
         board = [[Spot.Spot(Piece.Piece, row, col) for col in range(8)] for row in range(8)]
 
         for row in range(8):
-            x = (SHIFT_FOR_PHOTO + 80 * row)
+            y = (SHIFT_FOR_PHOTO + 80 * row)
             for col in range(8):
-                y = (SHIFT_FOR_PHOTO + 80 * col)
+                x = (SHIFT_FOR_PHOTO + 80 * col)
                 board[row][col].piece = None
                 isWhite = False
 
@@ -73,7 +73,7 @@ class InitGame:
                 if board[row][col].piece is not None:
                     image = pygame.image.load(board[row][col].piece.img())
                     self.display_surface.blit(pygame.transform.scale(image, (55, 55)),
-                                              (board[row][col].piece.y, board[row][col].piece.x))
+                                              (board[row][col].piece.x, board[row][col].piece.y))
 
     def print_board_in_CLI(self, board):
         """print the matrix in the CLI"""
@@ -90,14 +90,14 @@ class InitGame:
                 return i // CELL_SIZE
 
     def get_cell_center_by_positions(self, row, col):
-        x = row * CELL_SIZE
-        y = col * CELL_SIZE
+        y = row * CELL_SIZE
+        x = col * CELL_SIZE
         return x, y
 
     def select_possible_next_move(self, board, row, col):
         "color the selected cell by click"
         green_frame = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\green_fram.png')
-        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (col, row))
+        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (row, col))
 
 
 def main():
@@ -139,15 +139,17 @@ def main():
                     hasClicked = True
 
                 if hasClicked and init_game_obj.board[row][col].piece is None:
+                    possible_moves = stack
                     (x, y) = init_game_obj.get_cell_center_by_positions(row, col)
-
+                    #for i in possible_moves:
+                        #if (y, x) == i:
+                            #print(i)
                     init_game_obj.board[piece_row][piece_col].piece.x = x + SHIFT_FOR_PHOTO
                     init_game_obj.board[piece_row][piece_col].piece.y = y + SHIFT_FOR_PHOTO
 
                     init_game_obj.board[row][col].piece = init_game_obj.board[piece_row][piece_col].piece
                     init_game_obj.board[piece_row][piece_col].piece = None
 
-                    print(init_game_obj.board[row][col].piece.print_pos())
                     init_game_obj.draw(init_game_obj.board)
                     hasClicked = False
 

@@ -22,11 +22,11 @@ class Bishop(Piece):
 
         for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
-                print("{} == {}".format(f_x + f_y, x + y))
-                if self.white and (f_x - f_y == abs(x - y) or f_x + f_y == abs(x - y)):
+                if abs(f_x + f_y) == (x + y - (2 * main.SHIFT_FOR_PHOTO)):
                     stack.append((f_x, f_y))
-                elif not self.white and (f_y - f_x == abs(x - y) or f_x + f_y == (x + y - (2 * main.SHIFT_FOR_PHOTO))):
-                    stack.append((f_x, f_y))
+                if abs(f_x - f_y) == abs(x - y):
+                    if (x >= y and f_x <= f_y) or (x <= y and f_x >= f_y):
+                        stack.append((f_x, f_y))
 
         """stack.append(self.top_right(x, y))
         stack.append(self.bottom_right(x, y))

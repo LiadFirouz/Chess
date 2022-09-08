@@ -1,6 +1,7 @@
 from Piece import Piece
 import main
 
+
 class Queen(Piece):
 
     def __init__(self, x, y, isWhite, isKilled):
@@ -21,8 +22,14 @@ class Queen(Piece):
 
         for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
-                    if f_y - f_x == abs(x - y) or f_x + f_y == (x + y - (2 * main.SHIFT_FOR_PHOTO)) or f_x == (y - main.SHIFT_FOR_PHOTO) or f_y == (x - main.SHIFT_FOR_PHOTO):
-                        stack.append((f_x, f_y))
 
-        print(stack)
+                if abs(f_x + f_y) == (x + y - (2 * main.SHIFT_FOR_PHOTO)):
+                    stack.append((f_x, f_y))
+                if abs(f_x - f_y) == abs(x - y):
+                    if (x >= y and f_x <= f_y) or (x <= y and f_x >= f_y):
+                        stack.append((f_x, f_y))
+                if f_x == (y - main.SHIFT_FOR_PHOTO) or f_y == (x - main.SHIFT_FOR_PHOTO):
+                    stack.append((f_x, f_y))
+
+
         return stack

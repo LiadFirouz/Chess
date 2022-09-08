@@ -44,5 +44,5 @@ class King(Piece):
                     stack.append((f_x, f_y))
 
 
-        print(stack)
+        #print(stack)
         return stack
