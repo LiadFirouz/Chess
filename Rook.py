@@ -22,7 +22,7 @@ class Rook(Piece):
 
         for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
-                if f_x == (y - main.SHIFT_FOR_PHOTO) or f_y == (x - main.SHIFT_FOR_PHOTO):
+                if f_x == (x - main.SHIFT_FOR_PHOTO) or f_y == (y - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
 
         #print(stack)

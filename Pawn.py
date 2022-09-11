@@ -15,11 +15,12 @@ class Pawn(Piece):
 
     def move(self):
         stack = []
+        print(self.x, self.y)
         if not self.white:
-            pos = (self.y - main.SHIFT_FOR_PHOTO, (self.x - main.CELL_SIZE) - main.SHIFT_FOR_PHOTO)
+            pos = (self.x - main.SHIFT_FOR_PHOTO, self.y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE)
 
         else:
-            pos = (self.y - main.SHIFT_FOR_PHOTO, (self.x + main.CELL_SIZE) - main.SHIFT_FOR_PHOTO)
+            pos = (self.x - main.SHIFT_FOR_PHOTO, self.y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE)
 
         stack.append(pos)
         return stack

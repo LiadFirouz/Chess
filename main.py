@@ -23,41 +23,41 @@ class InitGame:
 
     def init_board(self):
         """initialize the game board in the matrix"""
-
-        board = [[Spot.Spot(Piece.Piece, row, col) for col in range(8)] for row in range(8)]
+        board = [[Spot.Spot(Piece.Piece, row, col) for row in range(8)] for col in range(8)]
 
         for row in range(8):
-            y = (SHIFT_FOR_PHOTO + 80 * row)
+            x = (SHIFT_FOR_PHOTO + 80 * row)
             for col in range(8):
-                x = (SHIFT_FOR_PHOTO + 80 * col)
+                y = (SHIFT_FOR_PHOTO + 80 * col)
                 board[row][col].piece = None
                 isWhite = False
 
-                if row == 1:
+                if col == 1:
                     board[row][col].piece = Pawn.Pawn(x, y, True, False)
-                if row == 6:
+                if col == 6:
                     board[row][col].piece = Pawn.Pawn(x, y, False, False)
 
-                if row == 0 or row == 7:
-                    if row == 0:
+                if col == 0 or col == 7:
+                    if col == 0:
                         isWhite = True
-                    if col == 0 or col == 7:
+                    if row == 0 or row == 7:
                         board[row][col].piece = Rook.Rook(x, y, isWhite, False)
-                    if col == 1 or col == 6:
+                    if row == 1 or row == 6:
                         board[row][col].piece = Knight.Knight(x, y, isWhite, False)
-                    if col == 2 or col == 5:
+                    if row == 2 or row == 5:
                         board[row][col].piece = Bishop.Bishop(x, y, isWhite, False)
 
-                if row == 0 and col == 3:
+                if col == 0 and row == 3:
                     board[row][col].piece = King.King(x, y, True, False)
-                if row == 0 and col == 4:
+                if col == 0 and row == 4:
                     board[row][col].piece = Queen.Queen(x, y, True, False)
 
-                if row == 7 and col == 3:
+                if col == 7 and row == 3:
                     board[row][col].piece = King.King(x, y, False, False)
-                if row == 7 and col == 4:
+                if col == 7 and row == 4:
                     board[row][col].piece = Queen.Queen(x, y, False, False)
 
+        #self.print_board_in_CLI(board)
         self.draw(board)
         return board
 
@@ -67,26 +67,28 @@ class InitGame:
         pygame.display.set_caption('Chess Game')
         image = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\img\chess_board.png')
         self.display_surface.blit(pygame.transform.scale(image, (self.surface_width, self.surface_height)), (0, 0))
-
-        for row in range(board.__len__()):
-            for col in range(board.__len__()):
+        #self.print_board_in_CLI(board)
+        for col in range(board.__len__()):
+            for row in range(board.__len__()):
                 if board[row][col].piece is not None:
                     image = pygame.image.load(board[row][col].piece.img())
+                    print("x,y:{},{} | row,col:{},{}".format(board[row][col].piece.x, board[row][col].piece.y, row, col))
                     self.display_surface.blit(pygame.transform.scale(image, (55, 55)),
                                               (board[row][col].piece.x, board[row][col].piece.y))
 
     def print_board_in_CLI(self, board):
         """print the matrix in the CLI"""
-        print("new BOARD:")
-        for row in board:
-            for obj in row:
-                if obj is not None:
-                    print(obj.piece.x, obj.piece.y)
+        print("BOARD:")
+        for row in range(board.__len__()):
+            for col in range(board.__len__()):
+                if board[row][col].piece is not None:
+                    print(board[row][col].__str__())
 
     def find_cell_by_dot(self, dot):
         """find the position click of the mouse on the board"""
         for i in range(0, 640, CELL_SIZE):
-            if i < dot <= i + CELL_SIZE:
+            if i <= dot <= i + CELL_SIZE:
+                #print('dot:{}, cell:{}'.format(dot, i // CELL_SIZE))
                 return i // CELL_SIZE
 
     def get_cell_center_by_positions(self, row, col):
@@ -94,10 +96,12 @@ class InitGame:
         x = col * CELL_SIZE
         return x, y
 
-    def select_possible_next_move(self, board, row, col):
+    def select_possible_next_move(self, board, x, y, player_color):
         "color the selected cell by click"
+        # print("x:{}, y:{} | cell:{}, row:{}".format(y, x, self.find_cell_by_dot(y), self.find_cell_by_dot(x)))
+        #if board[self.find_cell_by_dot(y)][self.find_cell_by_dot(x)].piece is None:
         green_frame = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\green_fram.png')
-        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (row, col))
+        self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (x, y))
 
 
 def main():
@@ -118,9 +122,13 @@ def main():
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+                #print(init_game_obj.print_board_in_CLI(init_game_obj.board))
+
                 pos = pygame.mouse.get_pos()
-                col = init_game_obj.find_cell_by_dot(pos[0])
-                row = init_game_obj.find_cell_by_dot(pos[1])
+                row = init_game_obj.find_cell_by_dot(pos[0])
+                col = init_game_obj.find_cell_by_dot(pos[1])
+                #print(row, col, init_game_obj.board[row][col].__str__())
+                #print("\n")
                 if init_game_obj.board[row][col].piece is not None:
 
                     if hasClicked:
@@ -130,28 +138,34 @@ def main():
 
                     piece_row = row
                     piece_col = col
+                    #print("send:{},{}".format(row, col))
                     stack = init_game_obj.board[row][col].piece.move()
                     possible_moves = init_game_obj.board[row][col].piece.move()
 
                     while possible_moves:
                         (x, y) = possible_moves.pop()
-                        init_game_obj.select_possible_next_move(board=init_game_obj.board, row=y, col=x)
+                        print("x,y:{},{} | row,col:{},{}".format(x, y, row, col))
+                        #print("row:{}, col:{}".format(init_game_obj.find_cell_by_dot(x), init_game_obj.find_cell_by_dot(y)))
+                        init_game_obj.select_possible_next_move(init_game_obj.board, x, y,
+                                                                init_game_obj.board[row][col].piece.white)
                     hasClicked = True
 
                 if hasClicked and init_game_obj.board[row][col].piece is None:
                     possible_moves = stack
                     (x, y) = init_game_obj.get_cell_center_by_positions(row, col)
-                    #for i in possible_moves:
-                        #if (y, x) == i:
-                            #print(i)
-                    init_game_obj.board[piece_row][piece_col].piece.x = x + SHIFT_FOR_PHOTO
-                    init_game_obj.board[piece_row][piece_col].piece.y = y + SHIFT_FOR_PHOTO
 
-                    init_game_obj.board[row][col].piece = init_game_obj.board[piece_row][piece_col].piece
-                    init_game_obj.board[piece_row][piece_col].piece = None
+                    for i in possible_moves:
+                        if (x, y) == i:
+                            # print(i)
+                            init_game_obj.board[piece_row][piece_col].piece.x = x + SHIFT_FOR_PHOTO
+                            init_game_obj.board[piece_row][piece_col].piece.y = y + SHIFT_FOR_PHOTO
 
-                    init_game_obj.draw(init_game_obj.board)
-                    hasClicked = False
+                            init_game_obj.board[row][col].piece = init_game_obj.board[piece_row][piece_col].piece
+                            init_game_obj.board[piece_row][piece_col].piece = None
+
+                            init_game_obj.draw(init_game_obj.board)
+                            #init_game_obj.print_board_in_CLI(init_game_obj.board)
+                            hasClicked = False
 
         # Draws the surface object to the screen.
         pygame.display.update()

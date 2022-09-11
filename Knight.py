@@ -23,10 +23,10 @@ class Knight(Piece):
 
                 if (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) == f_x or (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) == f_x:
                     if (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) == f_y or (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) == f_y:
-                        stack.append((f_y, f_x))
+                        stack.append((f_x, f_y))
                 if (y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) == f_y or (y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) == f_y:
                     if (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) == f_x or (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) == f_x:
-                        stack.append((f_y, f_x))
+                        stack.append((f_x, f_y))
 
         #print(stack)
         return stack

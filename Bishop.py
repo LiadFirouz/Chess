@@ -22,53 +22,11 @@ class Bishop(Piece):
 
         for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
-                if abs(f_x + f_y) == (x + y - (2 * main.SHIFT_FOR_PHOTO)):
+                if abs(f_x + f_y) == (x - (2 * main.SHIFT_FOR_PHOTO) + y):
                     stack.append((f_x, f_y))
                 if abs(f_x - f_y) == abs(x - y):
-                    if (x >= y and f_x <= f_y) or (x <= y and f_x >= f_y):
+                    if (x <= y and f_x <= f_y) or (x >= y and f_x >= f_y):
                         stack.append((f_x, f_y))
 
-        """stack.append(self.top_right(x, y))
-        stack.append(self.bottom_right(x, y))
-        #stack.append(self.top_left(x, y))
-        stack.append(self.bottom_left(x, y))
-
-        # if not self.white:
-        while y <= 640 and x <= 640:
-            stack.append((y - main.CELL_SIZE, x - main.CELL_SIZE))
-            stack.append((y + main.CELL_SIZE, x - main.CELL_SIZE))
-
-            y += 80
-            x += 80
-        else:
-            stack.append((self.y + main.CELL_SIZE, self.x + main.CELL_SIZE))
-            stack.append((self.y - main.CELL_SIZE, self.x + main.CELL_SIZE))"""
         print(stack)
         return stack
-
-    """def top_right(self, x, y):
-
-        if 10 <= x >= 650 or 10 <= y >= 650:
-            return
-        else:
-            return self.top_right(x + main.CELL_SIZE, y - main.CELL_SIZE)
-    def top_left(self, x, y):
-
-        if 10 <= x >= 650 or 10 <= y >= 650:
-            return
-        else:
-            return self.top_left(x - main.CELL_SIZE, y - main.CELL_SIZE)
-
-    def bottom_right(self, x, y):
-
-        if 10 <= x >= 650 or 10 <= y >= 650:
-            return
-        else:
-            return self.bottom_right(x + main.CELL_SIZE, y + main.CELL_SIZE)
-
-    def bottom_left(self, x, y):
-
-        if 10 <= x >= 650 or 10 <= y >= 650:
-            return
-        else:
-            return self.bottom_left(x - main.CELL_SIZE, y + main.CELL_SIZE)"""
