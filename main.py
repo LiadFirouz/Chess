@@ -57,7 +57,7 @@ class InitGame:
                 if col == 7 and row == 4:
                     board[row][col].piece = Queen.Queen(x, y, False, False)
 
-        # self.print_board_in_CLI(board)
+        #self.print_board_in_CLI(board)
         self.draw(board)
         return board
 
@@ -74,16 +74,16 @@ class InitGame:
                     image = pygame.image.load(board[row][col].piece.img())
                     self.display_surface.blit(pygame.transform.scale(image, (55, 55)),
                                               (board[row][col].piece.x, board[row][col].piece.y))
-        #self.print_board_in_CLI(board)
+        self.print_board_in_CLI(board)
 
     def print_board_in_CLI(self, board):
         """print the matrix in the CLI"""
         print("BOARD:")
         for col in range(8):
             for row in range(8):
-                print(board[row][col].__str__(), end='| ')
-                if board[row][col].__str__() is None:
-                    print("x")
+                print (board[row][col].__str__())
+                """if board[row][col].__str__() is None:
+                    print("x")"""
                 """if board[row][col].piece is not None:
                     print(board[row][col].piece.piece_name(), end='| ')
                 else: 
@@ -133,7 +133,7 @@ def main():
                 row = init_game_obj.find_cell_by_dot(pos[0])
                 col = init_game_obj.find_cell_by_dot(pos[1])
 
-                print(init_game_obj.board[row][col].piece)
+                #print(init_game_obj.board[row][col].piece)
 
                 if init_game_obj.board[row][col].piece is not None:
 
@@ -146,7 +146,7 @@ def main():
                     piece_col = col
                     stack = init_game_obj.board[row][col].piece.move()
                     possible_moves = init_game_obj.board[row][col].piece.move()
-                    init_game_obj.print_board_in_CLI(init_game_obj.board)
+                    #init_game_obj.print_board_in_CLI(init_game_obj.board)
                     while possible_moves:
                         (x, y) = possible_moves.pop()
 
