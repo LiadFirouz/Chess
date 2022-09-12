@@ -18,8 +18,8 @@ class Knight(Piece):
         x = self.x
         stack = []
 
-        for f_x in range(0, 640, 80):
-            for f_y in range(0, 640, 80):
+        for f_y in range(0, 640, 80):
+            for f_x in range(0, 640, 80):
 
                 if (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) == f_x or (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) == f_x:
                     if (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) == f_y or (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) == f_y:
@@ -30,3 +30,6 @@ class Knight(Piece):
 
         #print(stack)
         return stack
+
+    def piece_name(self):
+        return "Knight"

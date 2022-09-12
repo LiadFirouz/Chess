@@ -19,3 +19,6 @@ class Piece:
 
     def print_pos(self):
         print("x:{}, y:{}".format(self.x, self.y))
+
+    def piece_name(self):
+        print("")

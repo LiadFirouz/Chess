@@ -28,5 +28,8 @@ class Bishop(Piece):
                     if (x <= y and f_x <= f_y) or (x >= y and f_x >= f_y):
                         stack.append((f_x, f_y))
 
-        print(stack)
+        #print(stack)
         return stack
+
+    def piece_name(self):
+        return "Bishop"

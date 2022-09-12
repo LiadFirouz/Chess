@@ -32,7 +32,6 @@ class King(Piece):
                     stack.append((f_x, f_y))
                 if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
-
                 if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (
                         x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
                     stack.append((f_x, f_y))
@@ -49,3 +48,6 @@ class King(Piece):
 
         # print(stack)
         return stack
+
+    def piece_name(self):
+        return "King"

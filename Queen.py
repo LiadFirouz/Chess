@@ -32,3 +32,6 @@ class Queen(Piece):
                     stack.append((f_x, f_y))
 
         return stack
+
+    def piece_name(self):
+        return "Queen"

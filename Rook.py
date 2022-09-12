@@ -27,3 +27,6 @@ class Rook(Piece):
 
         #print(stack)
         return stack
+
+    def piece_name(self):
+        return "Rook"

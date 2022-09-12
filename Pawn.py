@@ -15,7 +15,7 @@ class Pawn(Piece):
 
     def move(self):
         stack = []
-        print(self.x, self.y)
+        #print(self.x, self.y)
         if not self.white:
             pos = (self.x - main.SHIFT_FOR_PHOTO, self.y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE)
 
@@ -24,3 +24,6 @@ class Pawn(Piece):
 
         stack.append(pos)
         return stack
+
+    def piece_name(self):
+        return "Pawn"
