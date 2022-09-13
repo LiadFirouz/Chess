@@ -74,16 +74,15 @@ class InitGame:
                     image = pygame.image.load(board[row][col].piece.img())
                     self.display_surface.blit(pygame.transform.scale(image, (55, 55)),
                                               (board[row][col].piece.x, board[row][col].piece.y))
-        self.print_board_in_CLI(board)
+        #self.print_board_in_CLI(board)
 
     def print_board_in_CLI(self, board):
         """print the matrix in the CLI"""
         print("BOARD:")
         for col in range(8):
             for row in range(8):
-                print (board[row][col].__str__())
-                """if board[row][col].__str__() is None:
-                    print("x")"""
+                if board[row][col].piece is None:
+                    print("x")
                 """if board[row][col].piece is not None:
                     print(board[row][col].piece.piece_name(), end='| ')
                 else: 
@@ -94,7 +93,7 @@ class InitGame:
     def find_cell_by_dot(self, dot):
         """find the position click of the mouse on the board"""
         for i in range(0, 640, CELL_SIZE):
-            if i <= dot <= i + CELL_SIZE:
+            if i <= dot <= (i + CELL_SIZE) - 1:
                 return i // CELL_SIZE
 
     def get_cell_center_by_positions(self, row, col):
@@ -149,6 +148,7 @@ def main():
                     #init_game_obj.print_board_in_CLI(init_game_obj.board)
                     while possible_moves:
                         (x, y) = possible_moves.pop()
+                        print("x,y:{},{} | row,col:{},{}".format(x, y, init_game_obj.find_cell_by_dot(x),init_game_obj.find_cell_by_dot(y)))
 
                         init_game_obj.select_possible_next_move(init_game_obj.board, x, y,
                                                                 init_game_obj.board[row][col].piece.white)

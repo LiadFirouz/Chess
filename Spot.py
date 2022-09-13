@@ -10,4 +10,4 @@ class Spot:
         self.col = col
 
     def __str__(self):
-        print(f"piece: {self.piece}, row:{self.row}, col: {self.col}")
+        return f"piece: {self.piece}, row:{self.row}, col: {self.col}"
