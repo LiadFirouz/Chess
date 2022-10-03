@@ -16,18 +16,20 @@ class King(Piece):
         return self.image
 
     def move(self, board):
-        y = self.y
-        x = self.x
+        col = main.InitGame.find_cell_by_dot(self, self.y)
+        row = main.InitGame.find_cell_by_dot(self, self.x)
         stack = []
 
-        for f_x in range(0, 640, 80):
+
+
+        """ for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
+                
 
                 if f_x == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_y == (y - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
                 if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
-
                 if f_x == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_y == (y - main.SHIFT_FOR_PHOTO):
                     stack.append((f_x, f_y))
                 if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO):
@@ -44,9 +46,7 @@ class King(Piece):
                     stack.append((f_x, f_y))
                 if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (
                         x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
-                    stack.append((f_x, f_y))
-
-        # print(stack)
+                    stack.append((f_x, f_y))"""
         return stack
 
     def piece_name(self):
