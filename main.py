@@ -145,23 +145,17 @@ def main():
                     piece_row = row
                     piece_col = col
                     if init_game_obj.board[row][col].piece is not None:
-                        moves = init_game_obj.board[row][col].piece.move()
+                        moves = init_game_obj.board[row][col].piece.move(init_game_obj.board)
 
                         while moves:
                             (x, y) = moves.pop()
-                            if init_game_obj.board[init_game_obj.find_cell_by_dot(x)][
-                                init_game_obj.find_cell_by_dot(y)].piece is None or \
-                                    init_game_obj.board[init_game_obj.find_cell_by_dot(x)][
-                                        init_game_obj.find_cell_by_dot(y)].piece.white is not \
-                                    init_game_obj.board[row][col].piece.white:
-                                init_game_obj.select_possible_next_move(init_game_obj.board, x, y,
-                                                                        init_game_obj.board[row][col].piece.white)
+                            init_game_obj.select_possible_next_move(init_game_obj.board, x, y,
+                                                                    init_game_obj.board[row][col].piece.white)
                         clicked = True
 
                 elif clicked:
                     (x, y) = init_game_obj.get_cell_center_by_positions(row, col)
-                    moves = init_game_obj.board[piece_row][piece_col].piece.move()
-                    possible_moves = [*set(moves)]
+                    possible_moves = [*set(init_game_obj.board[piece_row][piece_col].piece.move(init_game_obj.board))]
 
                     for i in possible_moves:
                         if (x, y) == i:

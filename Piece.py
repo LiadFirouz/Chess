@@ -10,7 +10,7 @@ class Piece:
     def img(self):
         return self.image
 
-    def move(self):
+    def move(self, board):
         pass
 
     def update_pos(self, x, y):

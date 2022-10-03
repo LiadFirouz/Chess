@@ -13,7 +13,7 @@ class Knight(Piece):
     def img(self):
         return self.image
 
-    def move(self):
+    def move(self, board):
         y = self.y
         x = self.x
         stack = []
