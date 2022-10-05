@@ -7,9 +7,9 @@ class Pawn(Piece):
     def __init__(self, x, y, isWhite, isKilled):
         super().__init__(x, y, isWhite, isKilled)
         if isWhite:
-            self.image = r'C:\Users\LiadF\PycharmProjects\Chess\img\128h\w_pawn.png'
+            self.image = r'/home/liadfirouz/PycharmProjects/Chess/img/128h/w_pawn.png'
         else:
-            self.image = r'C:\Users\LiadF\PycharmProjects\Chess\img\128h\b_pawn.png'
+            self.image = r'/home/liadfirouz/PycharmProjects/Chess/img/128h/b_pawn.png'
 
     def img(self):
         return self.image
@@ -27,12 +27,17 @@ class Pawn(Piece):
                 if board[main.InitGame.find_cell_by_dot(self, pos_x)][
                     main.InitGame.find_cell_by_dot(self, pos_y - main.CELL_SIZE)].piece is None:
                     stack.append((pos_x, pos_y - main.CELL_SIZE))
-                if board[main.InitGame.find_cell_by_dot(self, left[0])][
-                    main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and not main.WHITE_PLAYER:
-                    stack.append(left)
-                if board[main.InitGame.find_cell_by_dot(self, right[0])][
-                    main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and not main.WHITE_PLAYER:
-                    stack.append(right)
+                if right[0] < 560 and left[0] > 0:
+                    if board[main.InitGame.find_cell_by_dot(self, left[0])][
+                        main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, left[0])][
+                                main.InitGame.find_cell_by_dot(self, left[1])].piece.white is not self.white:
+                        stack.append(left)
+                    if board[main.InitGame.find_cell_by_dot(self, right[0])][
+                        main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, right[0])][
+                                main.InitGame.find_cell_by_dot(self, right[1])].piece is not self.white:
+                        stack.append(right)
 
         else:
             left = (pos_x - main.CELL_SIZE, pos_y + main.CELL_SIZE)
@@ -41,12 +46,17 @@ class Pawn(Piece):
                 if board[main.InitGame.find_cell_by_dot(self, pos_x)][
                     main.InitGame.find_cell_by_dot(self, pos_y + main.CELL_SIZE)].piece is None:
                     stack.append((pos_x, pos_y + main.CELL_SIZE))
-                if board[main.InitGame.find_cell_by_dot(self, left[0])][
-                    main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and not main.WHITE_PLAYER:
-                    stack.append(left)
-                if board[main.InitGame.find_cell_by_dot(self, right[0])][
-                    main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and not main.WHITE_PLAYER:
-                    stack.append(right)
+                if right[0] < 560 and left[0] > 0:
+                    if board[main.InitGame.find_cell_by_dot(self, left[0])][
+                        main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, left[0])][
+                                main.InitGame.find_cell_by_dot(self, left[1])].piece.white is not self.white:
+                        stack.append(left)
+                    if board[main.InitGame.find_cell_by_dot(self, right[0])][
+                        main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, right[0])][
+                                main.InitGame.find_cell_by_dot(self, right[1])].piece.white is not self.white:
+                        stack.append(right)
 
         return stack
 

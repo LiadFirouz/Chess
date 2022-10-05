@@ -66,7 +66,7 @@ class InitGame:
         "draw the pieces on the game board"
         self.display_surface = pygame.display.set_mode((self.surface_width, self.surface_height))
         pygame.display.set_caption('Chess Game')
-        image = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\img\chess_board.png')
+        image = pygame.image.load(r'/home/liadfirouz/PycharmProjects/Chess/img/chess_board.png')
         self.display_surface.blit(pygame.transform.scale(image, (self.surface_width, self.surface_height)), (0, 0))
         # self.print_board_in_CLI(board)
         for col in range(board.__len__()):
@@ -103,7 +103,7 @@ class InitGame:
     def select_possible_next_move(self, board, x, y, player_color):
         "color the selected cell by click"
         # print("x:{}, y:{} | cell:{}, row:{}".format(y, x, self.find_cell_by_dot(y), self.find_cell_by_dot(x)))
-        green_frame = pygame.image.load(r'C:\Users\LiadF\PycharmProjects\chessgame\green_fram.png')
+        green_frame = pygame.image.load(r'/home/liadfirouz/PycharmProjects/Chess/img/green_frame.png')
         self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (x, y))
 
 
