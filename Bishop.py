@@ -16,19 +16,64 @@ class Bishop(Piece):
         return self.image
 
     def move(self, board):
-        y = self.y
-        x = self.x
+        y = self.y - main.SHIFT_FOR_PHOTO
+        x = self.x - main.SHIFT_FOR_PHOTO
         stack = []
 
-        for f_x in range(0, 640, 80):
-            for f_y in range(0, 640, 80):
-                if abs(f_x + f_y) == (x - (2 * main.SHIFT_FOR_PHOTO) + y):
-                    stack.append((f_x, f_y))
-                if abs(f_x - f_y) == abs(x - y):
-                    if (x <= y and f_x <= f_y) or (x >= y and f_x >= f_y):
-                        stack.append((f_x, f_y))
+        f_x = x + main.CELL_SIZE
+        f_y_p = y + main.CELL_SIZE
+        f_y_m = y - main.CELL_SIZE
+        bump_into_x_p = False
+        bump_into_x_m = False
+        while f_x <= 560:
+            if f_y_p <= 560 and not bump_into_x_p:
+                stack.append((f_x, f_y_p))
+                if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                    main.InitGame.find_cell_by_dot(self, f_y_p)].piece is not None:
+                    if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                        main.InitGame.find_cell_by_dot(self, f_y_p)].piece.white is self.white:
+                        stack.pop()
+                    bump_into_x_p = True
+                f_y_p += main.CELL_SIZE
 
-        #print(stack)
+            if f_y_m >= 0 and not bump_into_x_m:
+                stack.append((f_x, f_y_m))
+                if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                    main.InitGame.find_cell_by_dot(self, f_y_m)].piece is not None:
+                    if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                        main.InitGame.find_cell_by_dot(self, f_y_m)].piece.white is self.white:
+                        stack.pop()
+                    bump_into_x_m = True
+                f_y_m -= main.CELL_SIZE
+            f_x += main.CELL_SIZE
+
+        f_x = x - main.CELL_SIZE
+        f_y_p = y + main.CELL_SIZE
+        f_y_m = y - main.CELL_SIZE
+        bump_into_x_p = False
+        bump_into_x_m = False
+        while f_x >= 0:
+            if f_y_p <= 560 and not bump_into_x_p:
+                stack.append((f_x, f_y_p))
+                if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                    main.InitGame.find_cell_by_dot(self, f_y_p)].piece is not None:
+                    if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                        main.InitGame.find_cell_by_dot(self, f_y_p)].piece.white is self.white:
+                        stack.pop()
+                    bump_into_x_p = True
+                f_y_p += main.CELL_SIZE
+
+            if f_y_m >= 0 and not bump_into_x_m:
+                stack.append((f_x, f_y_m))
+                if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                    main.InitGame.find_cell_by_dot(self, f_y_m)].piece is not None:
+                    if board[main.InitGame.find_cell_by_dot(self, f_x)][
+                        main.InitGame.find_cell_by_dot(self, f_y_m)].piece.white is self.white:
+                        stack.pop()
+                    bump_into_x_m = True
+                f_y_m -= main.CELL_SIZE
+            f_x -= main.CELL_SIZE
+
         return stack
 
     def piece_name(self):
