@@ -16,37 +16,37 @@ class King(Piece):
         return self.image
 
     def move(self, board):
-        col = main.InitGame.find_cell_by_dot(self, self.y)
-        row = main.InitGame.find_cell_by_dot(self, self.x)
+        y = self.y
+        x = self.x
         stack = []
 
-
-
-        """ for f_x in range(0, 640, 80):
+        for f_x in range(0, 640, 80):
             for f_y in range(0, 640, 80):
-                
+                flag = False
 
                 if f_x == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_y == (y - main.SHIFT_FOR_PHOTO):
-                    stack.append((f_x, f_y))
+                    flag = True
                 if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO):
-                    stack.append((f_x, f_y))
+                    flag = True
                 if f_x == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_y == (y - main.SHIFT_FOR_PHOTO):
-                    stack.append((f_x, f_y))
+                    flag = True
                 if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO):
-                    stack.append((f_x, f_y))
-                if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (
-                        x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
-                    stack.append((f_x, f_y))
-                if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (
-                        x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
+                    flag = True
+                if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
+                    flag = True
+                if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
+                    flag = True
+                if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
+                    flag = True
+                if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
+                    flag = True
+
+                if flag and board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y)].piece is not None:
+                    if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y)].piece.white is not self.white:
+                        stack.append((f_x, f_y))
+                elif flag:
                     stack.append((f_x, f_y))
 
-                if f_y == (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) and f_x == (
-                        x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE):
-                    stack.append((f_x, f_y))
-                if f_y == (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) and f_x == (
-                        x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE):
-                    stack.append((f_x, f_y))"""
         return stack
 
     def piece_name(self):
