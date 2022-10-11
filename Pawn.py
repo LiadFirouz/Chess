@@ -16,46 +16,39 @@ class Pawn(Piece):
 
     def move(self, board):
         stack = []
-        pos_x = self.x - main.SHIFT_FOR_PHOTO
-        pos_y = self.y - main.SHIFT_FOR_PHOTO
+        f_x = self.x - main.SHIFT_FOR_PHOTO
+        f_y = self.y - main.SHIFT_FOR_PHOTO
 
         if not self.white:
-            left = (pos_x - main.CELL_SIZE, pos_y - main.CELL_SIZE)
-            right = (pos_x + main.CELL_SIZE, pos_y - main.CELL_SIZE)
+            left = (f_x - main.CELL_SIZE, f_y - main.CELL_SIZE)
+            right = (f_x + main.CELL_SIZE, f_y - main.CELL_SIZE)
 
-            if pos_y - main.CELL_SIZE > -main.CELL_SIZE and not None:
-                if board[main.InitGame.find_cell_by_dot(self, pos_x)][
-                    main.InitGame.find_cell_by_dot(self, pos_y - main.CELL_SIZE)].piece is None:
-                    stack.append((pos_x, pos_y - main.CELL_SIZE))
-                if right[0] < 560 and left[0] > 0:
-                    if board[main.InitGame.find_cell_by_dot(self, left[0])][
-                        main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and \
-                            board[main.InitGame.find_cell_by_dot(self, left[0])][
-                                main.InitGame.find_cell_by_dot(self, left[1])].piece.white is not self.white:
+            if f_y - main.CELL_SIZE > -main.CELL_SIZE and not None:
+                if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y - main.CELL_SIZE)].piece is None:
+                    stack.append((f_x, f_y - main.CELL_SIZE))
+                if left[0] >= 0:
+                    if board[main.InitGame.find_cell_by_dot(self, left[0])][main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, left[0])][main.InitGame.find_cell_by_dot(self, left[1])].piece.white is not self.white:
                         stack.append(left)
-                    if board[main.InitGame.find_cell_by_dot(self, right[0])][
-                        main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and \
-                            board[main.InitGame.find_cell_by_dot(self, right[0])][
-                                main.InitGame.find_cell_by_dot(self, right[1])].piece is not self.white:
+                if  right[0] <= 560:
+                    if board[main.InitGame.find_cell_by_dot(self, right[0])][main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, right[0])][main.InitGame.find_cell_by_dot(self, right[1])].piece is not self.white:
                         stack.append(right)
 
         else:
-            left = (pos_x - main.CELL_SIZE, pos_y + main.CELL_SIZE)
-            right = (pos_x + main.CELL_SIZE, pos_y + main.CELL_SIZE)
-            if pos_y + main.CELL_SIZE < 640 and not None:
-                if board[main.InitGame.find_cell_by_dot(self, pos_x)][
-                    main.InitGame.find_cell_by_dot(self, pos_y + main.CELL_SIZE)].piece is None:
-                    stack.append((pos_x, pos_y + main.CELL_SIZE))
-                if right[0] < 560 and left[0] > 0:
-                    if board[main.InitGame.find_cell_by_dot(self, left[0])][
-                        main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and \
-                            board[main.InitGame.find_cell_by_dot(self, left[0])][
-                                main.InitGame.find_cell_by_dot(self, left[1])].piece.white is not self.white:
+            left = (f_x - main.CELL_SIZE, f_y + main.CELL_SIZE)
+            right = (f_x + main.CELL_SIZE, f_y + main.CELL_SIZE)
+
+            if f_y + main.CELL_SIZE < 640 and not None:
+                if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y + main.CELL_SIZE)].piece is None:
+                    stack.append((f_x, f_y + main.CELL_SIZE))
+                if left[0] >= 0:
+                    if board[main.InitGame.find_cell_by_dot(self, left[0])][main.InitGame.find_cell_by_dot(self, left[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, left[0])][main.InitGame.find_cell_by_dot(self, left[1])].piece.white is not self.white:
                         stack.append(left)
-                    if board[main.InitGame.find_cell_by_dot(self, right[0])][
-                        main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and \
-                            board[main.InitGame.find_cell_by_dot(self, right[0])][
-                                main.InitGame.find_cell_by_dot(self, right[1])].piece.white is not self.white:
+                if right[0] <= 560:
+                    if board[main.InitGame.find_cell_by_dot(self, right[0])][main.InitGame.find_cell_by_dot(self, right[1])].piece is not None and \
+                            board[main.InitGame.find_cell_by_dot(self, right[0])][main.InitGame.find_cell_by_dot(self, right[1])].piece.white is not self.white:
                         stack.append(right)
 
         return stack
