@@ -23,10 +23,19 @@ class Knight(Piece):
 
                 if (x - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) == f_x or (x - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) == f_x:
                     if (y - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) == f_y or (y - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) == f_y:
-                        stack.append((f_x, f_y))
+                        if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y)].piece is not None:
+                            if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y)].piece.white is not self.white:
+                                stack.append((f_x, f_y))
+                        else:
+                            stack.append((f_x, f_y))
+
                 if (y - main.SHIFT_FOR_PHOTO + (2 * main.CELL_SIZE)) == f_y or (y - main.SHIFT_FOR_PHOTO - (2 * main.CELL_SIZE)) == f_y:
                     if (x - main.SHIFT_FOR_PHOTO + main.CELL_SIZE) == f_x or (x - main.SHIFT_FOR_PHOTO - main.CELL_SIZE) == f_x:
-                        stack.append((f_x, f_y))
+                        if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y)].piece is not None:
+                            if board[main.InitGame.find_cell_by_dot(self, f_x)][main.InitGame.find_cell_by_dot(self, f_y)].piece.white is not self.white:
+                                stack.append((f_x, f_y))
+                        else:
+                            stack.append((f_x, f_y))
 
         #print(stack)
         return stack
