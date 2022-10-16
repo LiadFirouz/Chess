@@ -1,4 +1,9 @@
+import tkinter
+from _curses import window
+
 import pygame
+from tkinter import *
+
 import Bishop
 import King
 import Knight
@@ -102,9 +107,27 @@ class InitGame:
 
     def select_possible_next_move(self, board, x, y, player_color):
         "color the selected cell by click"
-        # print("x:{}, y:{} | cell:{}, row:{}".format(y, x, self.find_cell_by_dot(y), self.find_cell_by_dot(x)))
         green_frame = pygame.image.load(r'/home/liadfirouz/PycharmProjects/Chess/img/green_frame.png')
         self.display_surface.blit(pygame.transform.scale(green_frame, (CELL_SIZE, CELL_SIZE)), (x, y))
+
+    def replacement_window(self):
+        "selection window for switching the pawn"
+
+        root = Tk()
+        root.title("Switch your pawn")
+        root.resizable(width=False, height=False)
+        #x = root.winfo_x()/2
+        #root.geometry("+%d+%d" % (x, y))
+        root.eval('tk::PlaceWindow . center')
+        v = tkinter.StringVar()
+
+        Radiobutton(root,font='Helvetica 20 bold italic', text="Queen", variable=v, value="Queen", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack( side=LEFT)
+        Radiobutton(root,font='Helvetica 20 bold italic', text="Rook", variable=v, value="Rook", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack(side=LEFT)
+        Radiobutton(root,font='Helvetica 20 bold italic', text="Bishop", variable=v, value="Bishop", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack( side=LEFT)
+        Radiobutton(root,font='Helvetica 20 bold italic', text="Knight", variable=v, value="Knight", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack( side=LEFT)
+
+        mainloop()
+        return v.get()
 
 
 def main():
@@ -160,11 +183,23 @@ def main():
                     for i in possible_moves:
                         if (x, y) == i:
                             init_game_obj.board[row][col].piece = init_game_obj.board[piece_row][piece_col].piece
-                            init_game_obj.board[piece_row][piece_col].piece.update_pos(x + SHIFT_FOR_PHOTO,
-                                                                                       y + SHIFT_FOR_PHOTO)
+                            init_game_obj.board[piece_row][piece_col].piece.update_pos(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO)
                             init_game_obj.board[piece_row][piece_col].piece = None
                             init_game_obj.draw(init_game_obj.board)
                             clicked = False
+
+                            if init_game_obj.board[row][col].piece.piece_name() == "Pawn" and (col == 0 or col == 7):
+                                change_to = init_game_obj.replacement_window()
+                                if change_to == "Queen":
+                                    init_game_obj.board[row][col].piece = Queen.Queen(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
+                                if change_to == "Bishop":
+                                    init_game_obj.board[row][col].piece = Bishop.Bishop(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
+                                if change_to == "Rook":
+                                    init_game_obj.board[row][col].piece = Rook.Rook(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
+                                if change_to == "Knight":
+                                    init_game_obj.board[row][col].piece = Knight.Knight(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
+                                init_game_obj.draw(init_game_obj.board)
+                                clicked = False
 
                     init_game_obj.draw(init_game_obj.board)
                     pygame.display.update()
