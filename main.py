@@ -3,7 +3,6 @@ from _curses import window
 
 import pygame
 from tkinter import *
-from tkinter import messagebox
 import Bishop
 import King
 import Knight
@@ -76,7 +75,8 @@ class InitGame:
             for row in range(board.__len__()):
                 if board[row][col].piece is not None:
                     image = pygame.image.load(board[row][col].piece.img())
-                    self.display_surface.blit(pygame.transform.scale(image, (55, 55)), (board[row][col].piece.x, board[row][col].piece.y))
+                    self.display_surface.blit(pygame.transform.scale(image, (55, 55)),
+                                              (board[row][col].piece.x, board[row][col].piece.y))
 
     def print_board_in_CLI(self, board):
         """print the matrix in the CLI"""
@@ -114,27 +114,30 @@ class InitGame:
         root.eval('tk::PlaceWindow . center')
         v = tkinter.StringVar()
 
-        Radiobutton(root, font='Helvetica 20 bold italic', text="Queen", variable=v, value="Queen", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack( side=LEFT)
-        Radiobutton(root, font='Helvetica 20 bold italic', text="Rook", variable=v, value="Rook", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack(side=LEFT)
-        Radiobutton(root, font='Helvetica 20 bold italic', text="Bishop", variable=v, value="Bishop", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack( side=LEFT)
-        Radiobutton(root, font='Helvetica 20 bold italic', text="Knight", variable=v, value="Knight", indicator=0, bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack( side=LEFT)
+        Radiobutton(root, font='Helvetica 20 bold italic', text="Queen", variable=v, value="Queen", indicator=0,
+                    bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack(side=LEFT)
+        Radiobutton(root, font='Helvetica 20 bold italic', text="Rook", variable=v, value="Rook", indicator=0,
+                    bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack(side=LEFT)
+        Radiobutton(root, font='Helvetica 20 bold italic', text="Bishop", variable=v, value="Bishop", indicator=0,
+                    bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack(side=LEFT)
+        Radiobutton(root, font='Helvetica 20 bold italic', text="Knight", variable=v, value="Knight", indicator=0,
+                    bg='#33383b', fg='white', command=root.destroy, height=5, width=10).pack(side=LEFT)
 
         mainloop()
         return v.get()
 
-    def check_pop_up(self):
-        "selection window for switching the pawn"
+    def check_pop_up(self) -> object:
+        "create a pop up window for a check"
         root = Tk()
         root.title("There has been a check")
         root.resizable(width=False, height=False)
         root.eval('tk::PlaceWindow . center')
-        Button(root, font='Helvetica 20 bold italic', text="Check!", command=lambda: root.destroy(), height=3, width=25).pack(side="bottom", fill="none", expand=True)
+        Button(root, font='Helvetica 20 bold italic', text="Check!", command=lambda: root.destroy(), height=3,
+               width=25).pack(side="bottom", fill="none", expand=True)
         root.mainloop()
 
-
     def there_is_a_check(self, board):
-        stack = []
-
+        "searching in all the matrix if there is any possible check"
         for col in range(board.__len__()):
             for row in range(board.__len__()):
                 piece = board[row][col].piece
@@ -146,8 +149,10 @@ class InitGame:
                         while stack:
                             (x, y) = stack.pop()
                             if board[self.find_cell_by_dot(x)][self.find_cell_by_dot(y)].piece is not None:
-                                if board[self.find_cell_by_dot(x)][self.find_cell_by_dot(y)].piece.piece_name() == "King":
+                                if board[self.find_cell_by_dot(x)][
+                                    self.find_cell_by_dot(y)].piece.piece_name() == "King":
                                     self.check_pop_up()
+                                    return
 
 
 def main():
@@ -157,7 +162,6 @@ def main():
     clicked = False
     piece_row = None
     piece_col = None
-    possible_moves = []
 
     while run:
         # iterate over the list of Event objects
@@ -175,29 +179,28 @@ def main():
                 row = init_game_obj.find_cell_by_dot(pos[0])
                 col = init_game_obj.find_cell_by_dot(pos[1])
 
+                # Check if the player click on a piece if not set the changes for the click
                 if init_game_obj.board[row][col].piece is not None and (clicked and init_game_obj.board[row][col].piece.white == init_game_obj.board[piece_row][piece_col].piece.white):
                     clicked = False
                     piece_row = row
                     piece_col = col
-                    init_game_obj.draw(init_game_obj.board)
-                    pygame.display.update()
+
 
                 if not clicked:
                     piece_row = row
                     piece_col = col
                     if init_game_obj.board[row][col].piece is not None:
                         moves = init_game_obj.board[row][col].piece.move(init_game_obj.board)
-
                         while moves:
                             (x, y) = moves.pop()
                             init_game_obj.select_possible_next_move(init_game_obj.board, x, y, init_game_obj.board[row][col].piece.white)
-
                         clicked = True
 
                 elif clicked:
                     (x, y) = init_game_obj.get_cell_center_by_positions(row, col)
                     possible_moves = [*set(init_game_obj.board[piece_row][piece_col].piece.move(init_game_obj.board))]
 
+                    # Check if the mouse click is in the stack of the possible moves and if so change the players on the screen
                     for i in possible_moves:
                         if (x, y) == i:
                             init_game_obj.board[row][col].piece = init_game_obj.board[piece_row][piece_col].piece
@@ -206,25 +209,24 @@ def main():
                             init_game_obj.draw(init_game_obj.board)
                             clicked = False
 
+                            # Check if the pawn is at the edge and if so open a pop-up for switch the pawn
                             if init_game_obj.board[row][col].piece.piece_name() == "Pawn" and (col == 0 or col == 7):
                                 change_to = init_game_obj.replacement_window()
                                 if change_to == "Queen":
                                     init_game_obj.board[row][col].piece = Queen.Queen(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
-                                if change_to == "Bishop":
-                                    init_game_obj.board[row][col].piece = Bishop.Bishop(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
-                                if change_to == "Rook":
+                                elif change_to == "Bishop":
+                                    init_game_obj.board[row][col].piece = Bishop.Bishop(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO,init_game_obj.board[row][col].piece.white, False)
+                                elif change_to == "Rook":
                                     init_game_obj.board[row][col].piece = Rook.Rook(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
-                                if change_to == "Knight":
+                                elif change_to == "Knight":
                                     init_game_obj.board[row][col].piece = Knight.Knight(x + SHIFT_FOR_PHOTO, y + SHIFT_FOR_PHOTO, init_game_obj.board[row][col].piece.white, False)
-                                init_game_obj.draw(init_game_obj.board)
-                                clicked = False
 
+                    # Draws the surface object to the screen and check if there ia any check
                     init_game_obj.draw(init_game_obj.board)
                     init_game_obj.there_is_a_check(init_game_obj.board)
 
-            # Draws the surface object to the screen.
+        # Draws the surface object to the screen.
         pygame.display.update()
-
 
 
 if __name__ == '__main__':
